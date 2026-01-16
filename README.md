@@ -140,7 +140,7 @@ Karena frontend ini menyatu dengan monolith Laravel, Anda tidak perlu menjalanka
     ```
     [http://127.0.0.1:8000](http://127.0.0.1:8000)
     ```
-3.  mengarahkan ke halaman Login secara otomatis.
+3.  Anda akan diarahkan ke halaman Login secara otomatis.
 
 ---
 
