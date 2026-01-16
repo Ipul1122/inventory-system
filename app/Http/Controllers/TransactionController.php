@@ -12,27 +12,24 @@ class TransactionController extends Controller
 {
     public function store(StoreTransactionRequest $request)
     {
-        // Gunakan DB Transaction agar data konsisten (Atomicity)
         // Jika insert gagal, stok tidak berkurang, dan sebaliknya.
         return DB::transaction(function () use ($request) {
             
-            // 1. Ambil data produk
+            //  GET data produk
             $product = Product::lockForUpdate()->find($request->product_id); // Lock row agar tidak balapan data (Concurrency)
 
-            // 2. Cek Stok
+            // Cek Stok
             if ($product->stock < $request->quantity) {
                 return response()->json(['error' => 'Stok tidak mencukupi'], 400);
             }
 
-            // 3. Hitung Total Harga
             $totalPrice = $product->price * $request->quantity;
 
-            // 4. Kurangi Stok
             $product->decrement('stock', $request->quantity);
 
-            // 5. Simpan Transaksi
+            // Simpan Transaksi berdasarkan user yang sedang login
             $transaction = Transaction::create([
-                'user_id' => auth('api')->user()->id, // Mengambil ID user yg login (Seller/Admin)
+                'user_id' => auth('api')->user()->id, 
                 'product_id' => $product->id,
                 'quantity' => $request->quantity,
                 'total_price' => $totalPrice

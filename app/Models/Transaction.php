@@ -17,7 +17,6 @@ class Transaction extends Model
         'total_price'
     ];
 
-    // Opsional: Relasi agar bisa mengambil info produk/user dari transaksi
     public function product()
     {
         return $this->belongsTo(Product::class);

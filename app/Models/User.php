@@ -6,7 +6,7 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Role; // <-- Pastikan import Model Role
+use App\Models\Role; 
 
 class User extends Authenticatable implements JWTSubject
 {

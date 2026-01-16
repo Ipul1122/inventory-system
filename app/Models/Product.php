@@ -9,7 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Tambahkan ini agar kolom bisa diisi
     protected $fillable = [
         'name',
         'stock',
