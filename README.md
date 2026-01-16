@@ -32,8 +32,7 @@ Ikuti langkah berikut untuk menjalankan aplikasi di local machine Anda.
 Pastikan Composer sudah terinstall.
 - Clone repository ini
 ```
-
-**git clone [https://github.com/username-anda/inventory-api.git]**
+git clone https://github.com/username-anda/inventory-api.git
 
 ```
 cd inventory-api
