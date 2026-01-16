@@ -9,7 +9,7 @@ use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
-    // GET /api/products (Bisa diakses semua role)
+    // GET /api/products (public)
     public function index()
     {
         $products = Product::all();

@@ -10,22 +10,21 @@ class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
-     * Middleware ini memastikan method selain login harus punya token
+     * Middleware memastikan method selain login harus punya token
      */
     public function __construct()
     {
-        // Kita protect lewat route saja agar lebih fleksibel, 
-        // jadi constructor ini boleh dikosongkan atau dihapus.
+
     }
 
     /**
-     * Get a JWT via given credentials.
+     * mendapatkan token JWT lewat kredensial yang diberikan.
      */
     public function login()
     {
         $credentials = request(['email', 'password']);
 
-        // PENTING: Gunakan auth('api') agar Laravel tau kita pakai JWT Guard
+        // menggunakan auth('api') supaya laravel mengetahui memakai JWT Guard
         if (! $token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized. Email atau Password salah'], 401);
         }
@@ -42,7 +41,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
+     * Logout user (invalidate the token).
      */
     public function logout()
     {
@@ -52,14 +51,13 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the token array structure.
+     * mendapatkan token JWT.
      */
     protected function respondWithToken($token)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            // auth('api')->factory() memanggil instance JWTAuth untuk ambil TTL (Time To Live)
             'expires_in' => 3600,
             'user' => auth('api')->user()
         ]);
