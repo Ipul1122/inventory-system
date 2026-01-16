@@ -31,20 +31,21 @@ Ikuti langkah berikut untuk menjalankan aplikasi di local machine Anda.
 ### 1. Clone & Install Dependencies
 Pastikan Composer sudah terinstall.
 - Clone repository ini
-```bash
+```bash 
 git clone https://github.com/username-anda/inventory-api.git
 
+```
+cd inventory-api
 
+Install dependency PHP
+```
+composer install
 
--cd inventory-api
-
--Install dependency PHP
--composer install
-
+```
 ### 2. Setup Environment (.env)
 ```
 cp .env.example .env
-
+```
 **Buka file .env dan sesuaikan konfigurasi database Anda**
 ```
 DB_CONNECTION=mysql
@@ -54,29 +55,46 @@ DB_DATABASE=YOUR_DATABASE_NAME
 DB_USERNAME=root
 DB_PASSWORD=
 
+```
 ### 3. Generate Keys
 ```
 php artisan key:generate
 php artisan jwt:secret
-
+```
 ### 4. Database Migration & Seeding
 ```
 php artisan migrate --seed
-
+```
 ### 5 Running server
 ```
 php artisan serve
-
+```
 ## API DOCUMENTATION
-Key: Accept
-Value: application/json
+- Go to Headers and set key and value
+**Key: Accept**
 
-**example BODY JSON
+**Value: application/json**
+
+## EXAMPLE BODY JSON
+### api/auth/login
+- POST this into Postman, go to body, choice raw and input at body section
 ```
 {
-    "product_id": 1,
-    "quantity": 2
+    "email": "admin@toko.com",
+    "password": "password"
 }
+```
+- You can GET bearer Token 
 
-
-
+### api/auth/products
+- if u want created new data, take and copy bearer token from auth login.
+- Go to Authorization, choice auth type is bearer Token, then paste into Token from you right
+- Then go back to body and paste this JSON to make data
+```
+{
+    "name": "Laptop Gaming",
+    "stock": 10,
+    "price": 15000000
+}
+```
+- it will add data in table products
