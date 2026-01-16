@@ -10,35 +10,41 @@ use App\Http\Requests\StoreTransactionRequest;
 
 class TransactionController extends Controller
 {
-    public function store(StoreTransactionRequest $request)
+    // Ganti nama function jadi 'sell', dan terima parameter $id
+    public function sell(Request $request, $id)
     {
-        // Jika insert gagal, stok tidak berkurang, dan sebaliknya.
-        return DB::transaction(function () use ($request) {
-            
-            //  GET data produk
-            $product = Product::lockForUpdate()->find($request->product_id); // Lock row agar tidak balapan data (Concurrency)
+        // Validasi input quantity saja (product_id dari URL)
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
 
-            // Cek Stok
+        return DB::transaction(function () use ($request, $id) {
+            // Ambil produk berdasarkan ID di URL
+            $product = Product::lockForUpdate()->findOrFail($id);
+
+            // Logika Wajib: Stok tidak boleh negatif
             if ($product->stock < $request->quantity) {
-                return response()->json(['error' => 'Stok tidak mencukupi'], 400);
+                return response()->json(['error' => 'Stok tidak mencukupi, transaksi ditolak.'], 400);
             }
 
+            // Hitung harga
             $totalPrice = $product->price * $request->quantity;
 
+            // Kurangi Stok
             $product->decrement('stock', $request->quantity);
 
-            // Simpan Transaksi berdasarkan user yang sedang login
+            // Simpan Transaksi
             $transaction = Transaction::create([
-                'user_id' => auth('api')->user()->id, 
+                'user_id' => auth('api')->id(),
                 'product_id' => $product->id,
                 'quantity' => $request->quantity,
                 'total_price' => $totalPrice
             ]);
 
             return response()->json([
-                'message' => 'Transaksi berhasil',
+                'message' => 'Penjualan berhasil',
                 'data' => $transaction
-            ], 201);
+            ], 200); // Atau 201
         });
     }
 }
