@@ -34,16 +34,17 @@ Pastikan Composer sudah terinstall.
 ```bash
 git clone https://github.com/username-anda/inventory-api.git
 
-```
-cd inventory-api
 
-**Install dependency PHP**
-```
-composer install
+
+-cd inventory-api
+
+-Install dependency PHP
+-composer install
 
 ### 2. Setup Environment (.env)
 ```
 cp .env.example .env
+
 **Buka file .env dan sesuaikan konfigurasi database Anda**
 ```
 DB_CONNECTION=mysql
