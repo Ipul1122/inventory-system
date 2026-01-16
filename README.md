@@ -30,23 +30,23 @@ Ikuti langkah berikut untuk menjalankan aplikasi di local machine Anda.
 
 ### 1. Clone & Install Dependencies
 Pastikan Composer sudah terinstall.
-```bash
+```
 **Clone repository ini**
-```bash
+```
 git clone [https://github.com/username-anda/inventory-api.git]
 
-```bash
+```
 cd inventory-api
 
 **Install dependency PHP**
-```bash
+```
 composer install
 
 ### 2. Setup Environment (.env)
-```bash
+```
 cp .env.example .env
 **Buka file .env dan sesuaikan konfigurasi database Anda**
-```bash
+```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -55,9 +55,28 @@ DB_USERNAME=root
 DB_PASSWORD=
 
 ### 3. Generate Keys
-```bash
+```
 php artisan key:generate
 php artisan jwt:secret
+
+### 4. Database Migration & Seeding
+```
+php artisan migrate --seed
+
+### 5 Running server
+```
+php artisan serve
+
+## API DOCUMENTATION
+Key: Accept
+Value: application/json
+
+**example BODY JSON
+```
+{
+    "product_id": 1,
+    "quantity": 2
+}
 
 
 
