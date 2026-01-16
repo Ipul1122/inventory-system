@@ -12,7 +12,6 @@
     </style>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark hidden" id="navbar">
         <div class="container">
             <a class="navbar-brand" href="#">Inventory App</a>
