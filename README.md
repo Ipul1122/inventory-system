@@ -1,9 +1,11 @@
 # Simple Inventory API (Laravel 11 + JWT)
 
-Aplikasi Backend Sederhana untuk sistem inventaris dan manajemen pengguna. Aplikasi ini dibuat sebagai bagian dari *Technical Test* Programmer.
+Aplikasi Backend dan Frontend Sederhana untuk sistem inventaris dan manajemen pengguna. Aplikasi ini dibuat sebagai bagian dari *Technical Test* Programmer.
 
 Menggunakan **Laravel 11** dengan arsitektur **RESTful API**, autentikasi berbasis **JWT (JSON Web Token)**, dan **Role-Based Access Control (RBAC)**.
 
+---
+### BACKEND
 ---
 
 ## 🛠 Tech Stack
