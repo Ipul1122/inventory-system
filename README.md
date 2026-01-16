@@ -100,3 +100,88 @@ php artisan serve
 }
 ```
 - it will add data in table products
+
+---
+### FRONT END
+---
+
+# 🖥️ Frontend Documentation (Simple Inventory Client)
+
+Frontend aplikasi ini dibangun menggunakan pendekatan **Single Page Application (SPA)** sederhana yang terintegrasi langsung ke dalam Laravel Blade.
+
+Antarmuka ini dirancang untuk mengkonsumsi **REST API** yang telah dibuat, menangui Autentikasi JWT, dan manajemen state sederhana menggunakan **Vanilla JavaScript** dan **Local Storage**.
+
+---
+
+## 🛠 Tech Stack (Frontend)
+* **Structure:** HTML5 (Laravel Blade View)
+* **Styling:** Bootstrap 5 (via CDN) - Responsive & Modern UI.
+* **Logic:** Vanilla JavaScript (ES6+).
+* **HTTP Client:** Native Fetch API.
+* **State Management:** LocalStorage (untuk menyimpan Token JWT & Role).
+
+---
+
+## 📂 Lokasi File
+Seluruh logika Frontend (HTML, CSS, JS) terdapat dalam **satu file** untuk kemudahan deployment dan testing:
+* Path: `resources/views/app.blade.php`
+* Route: `http://127.0.0.1:8000/`
+
+---
+
+## 🚀 Cara Menjalankan UI
+Karena frontend ini menyatu dengan monolith Laravel, Anda tidak perlu menjalankan `npm run dev` atau server terpisah.
+
+1.  Pastikan server backend berjalan:
+    ```bash
+    php artisan serve
+    ```
+2.  Buka browser dan akses:
+    ```
+    [http://127.0.0.1:8000](http://127.0.0.1:8000)
+    ```
+3.  Anda akan diarahkan ke halaman Login secara otomatis.
+
+---
+
+## ✨ Fitur Antarmuka
+Frontend memiliki logika dinamis yang menyesuaikan tampilan berdasarkan **Role User** yang login.
+
+### 1. Authentication Flow
+* **Login:** Mengirim email/password ke API -> Menerima JWT -> Simpan di Browser.
+* **Auto Redirect:** Jika user belum login, otomatis dilempar ke halaman login.
+* **Logout:** Menghapus Token dari LocalStorage dan refresh halaman.
+
+### 2. Dashboard Inventaris
+* **View Products:** Menampilkan tabel barang (Nama, Harga, Sisa Stok).
+* **Badge Stok:** Indikator warna (Merah jika kosong, Biru jika tersedia).
+* **Tambah Barang:** Tombol hanya muncul jika login sebagai **Admin**.
+* **Jual Barang:**
+    * Tombol muncul untuk **Admin** & **Seller**.
+    * **Validasi UI:** Sistem akan mengecek stok saat tombol diklik. Jika input melebihi sisa stok, muncul **Alert Error** tanpa reload halaman.
+
+### 3. Manajemen User (Role Settings)
+* **Proteksi Menu:** Menu ini samasekali tidak terlihat (hidden) jika login sebagai Seller/Pelanggan.
+* **Change Role:** Admin dapat mengubah role user lain melalui dropdown dan tombol "Simpan".
+
+---
+
+## 🧪 Skenario Testing UI
+Gunakan akun berikut untuk melihat perbedaan tampilan (UI Logic):
+
+| Akun | Email | Tampilan yang Diharapkan |
+| :--- | :--- | :--- |
+| **Admin** | `admin@toko.com` | Menu lengkap (Inventaris + User), Bisa Tambah Barang, Bisa Jual. |
+| **Seller** | `seller@toko.com` | Hanya Menu Inventaris, **Bisa Jual**, TAPI Tombol "Tambah Barang" Hilang. |
+| **Pelanggan** | `pelanggan@toko.com` | Hanya Menu Inventaris (View Only), Tidak ada tombol aksi apapun. |
+
+---
+
+## ⚠️ Troubleshooting Frontend
+Jika data tidak muncul atau terjadi error:
+1.  **Cek Console:** Tekan `F12` -> Tab **Console** untuk melihat pesan error JavaScript.
+2.  **Cek Token:** Tekan `F12` -> Tab **Application** -> **Local Storage**. Pastikan ada key bernama `token`.
+3.  **Clear Cache:** Jika tampilan berantakan, coba Hard Refresh (`Ctrl + F5`).
+
+---
+*Frontend Module Implementation*
